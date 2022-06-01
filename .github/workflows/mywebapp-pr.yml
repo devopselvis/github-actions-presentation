@@ -43,16 +43,12 @@ jobs:
       run: |
         dotnet test "${{ github.workspace }}/src/mywebapp.sln" --no-restore --logger:"junit;LogFilePath=${{ github.workspace }}/results/test-results.xml"
 
-    - name: Checking that file is there
-      run: ls -la ${{ github.workspace }}/results
-
     # create a test summary markdown file
     - name: Create test summary
       uses: test-summary/action@v1
       with:
         paths: ${{ github.workspace }}/results/*.xml
-        # Commenting this line out for now, to see if the results go anywhere
-        #output: ${{ github.workspace }}/test/summary.md
+        output: ${{ github.workspace }}/results/summary.md
       if: always()
 
     - name: Publish Artifacts To Workflow
