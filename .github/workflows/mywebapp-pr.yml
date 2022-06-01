@@ -64,6 +64,7 @@ jobs:
     - name: Publish Artifacts To Workflow
       run: |
         dotnet publish "${{ github.workspace }}/src/mywebapp/mywebapp.csproj" -c Release -o mywebapp-files
+        echo "I've created my artifacts to upload >> $GITHUB_STEP_SUMMARY"
     
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.0
