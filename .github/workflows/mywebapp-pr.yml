@@ -41,7 +41,7 @@ jobs:
     
     - name: Test
       run: |
-        dotnet test "${{ github.workspace }}/src/mywebapp.sln" --no-restore --logger:"junit;LogFilePath=results/test-results.trx"
+        dotnet test "${{ github.workspace }}/src/mywebapp.sln" --no-restore --logger:"junit;LogFilePath=results/test-results.xml"
 
     # create a test summary markdown file
     - name: Create test summary
