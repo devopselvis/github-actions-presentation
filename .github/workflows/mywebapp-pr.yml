@@ -45,12 +45,12 @@ jobs:
 
     # create a test summary markdown file
     - name: Create test summary
-        uses: test-summary/action@v1
-        with:
-          paths: results/**/*.xml
-          # Commenting this line out for now, to see if the results go anywhere
-          #output: ${{ github.workspace }}/test/summary.md
-        if: always()
+      uses: test-summary/action@v1
+      with:
+        paths: results/**/*.xml
+        # Commenting this line out for now, to see if the results go anywhere
+        #output: ${{ github.workspace }}/test/summary.md
+      if: always()
 
     - name: Publish Artifacts To Workflow
       run: |
