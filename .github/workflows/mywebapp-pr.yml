@@ -44,12 +44,22 @@ jobs:
         dotnet test "${{ github.workspace }}/src/mywebapp.sln" --no-restore --logger:"junit;LogFilePath=${{ github.workspace }}/results/test-results.xml"
 
     # create a test summary markdown file
+    # if you don't specify an output file, it will automatically add 
+    # as a job summary. If you specify an output file, you have to 
+    # create your own step of adding it to the job summary. I am 
+    # intentionally doing that to show job summaries
     - name: Create test summary
       uses: test-summary/action@v1
       with:
         paths: ${{ github.workspace }}/results/*.xml
         output: ${{ github.workspace }}/results/summary.md
       if: always()
+
+    - name: Add Test Results To Job Summary
+      run: |
+        echo "TEST RESULTS:" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+        cat "${{ github.workspace }}/results/summary.md" >> $GITHUB_STEP_SUMMARY
 
     - name: Publish Artifacts To Workflow
       run: |
