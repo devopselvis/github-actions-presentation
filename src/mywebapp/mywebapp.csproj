@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="JunitXml.TestLogger" Version="3.0.110" />
+  </ItemGroup>
+
 </Project>

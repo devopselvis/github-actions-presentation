@@ -1,0 +1,69 @@
+# Name of workflow
+name: MyWebApp - Pull Request Workflow
+
+# Workflow trigger event. We want the workflow to trigger on a pull
+# request to main
+on:
+  pull_request:
+    branches: 
+      - main
+  
+jobs:
+
+  # Build and test the PR
+  build-test-branch:
+
+    name: "Build and Test Of PR"
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # I am a step to make the PR fail for the branch protection rule
+    # comment me out to make the workflow work
+    #- name: Make PR Fail
+    #  run: exit 1
+
+    - uses: actions/checkout@v2
+
+    # .NET 6 is already installed on hosted runners by default. If 
+    # it was missing, you can use the step below to install it
+    #- name: Setup .NET Core 6
+    #  uses: actions/setup-dotnet@v1
+    #  with:
+    #    dotnet-version: 6.0.x
+    
+    - name: Restore Dependencies
+      run: dotnet restore "${{ github.workspace }}/src/mywebapp.sln"
+    
+    - name: Build
+      run: dotnet build "${{ github.workspace }}/src/mywebapp.sln" --configuration Release --no-restore
+    
+    - name: Test
+      run: |
+        dotnet test "${{ github.workspace }}/src/mywebapp.sln" --no-restore --verbosity normal  --logger "junit;LogFilePath=results/test-results.trx"
+
+    # create a test summary markdown file
+    - name: Create test summary
+        uses: test-summary/action@v1
+        with:
+          paths: results/**/*.xml
+          # Commenting this line out for now, to see if the results go anywhere
+          #output: ${{ github.workspace }}/test/summary.md
+        if: always()
+
+    - name: Publish Artifacts To Workflow
+      run: |
+        dotnet publish "${{ github.workspace }}/src/mywebapp/mywebapp.csproj" -c Release -o mywebapp-files
+    
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        # Artifact name
+        name: mywebappbuildartifacts
+        # A file, directory or wildcard pattern that describes what to upload
+        path: mywebapp-files/**
+        # The desired behavior if no files are found using the provided path.
+        if-no-files-found: error
+        # Duration after which artifact will expire in days. 0 means using default retention.
+        retention-days: 90
