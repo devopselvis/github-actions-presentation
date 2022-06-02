@@ -2,10 +2,9 @@ name: MyWebApp - Push To Main Workflow
 
 # triggering on both a push to main, as well as manually
 on:
-  workflow_dispatch:
   push:
-    branches: 
-      - main
+    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   id-token: write
