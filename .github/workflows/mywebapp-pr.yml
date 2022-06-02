@@ -19,11 +19,6 @@ jobs:
 
     steps:
 
-    # I am a step to make the PR fail for the branch protection rule
-    # comment me out to make the workflow work
-    #- name: Make PR Fail
-    #  run: exit 1
-
     - uses: actions/checkout@v2
 
     # .NET 6 is already installed on hosted runners by default. If 
