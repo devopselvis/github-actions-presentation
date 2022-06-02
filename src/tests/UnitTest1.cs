@@ -30,8 +30,14 @@ namespace tests
             Assert.Equal(42, (42 + 1));
         }
 
-        [Fact(Skip="skips test five")]
-        public void SkipsTestFive()
+        [Fact]
+        public void FailsTestFive()
+        {
+            Assert.Equal(42, (42 + 2));
+        }
+
+        [Fact(Skip="skips test six")]
+        public void SkipsTestSix()
         {
             Assert.Equal(72, 72);
         }
