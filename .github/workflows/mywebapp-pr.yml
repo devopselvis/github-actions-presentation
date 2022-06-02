@@ -1,0 +1,77 @@
+# Name of workflow
+name: MyWebApp - Pull Request Workflow
+
+# Workflow trigger event. We want the workflow to trigger on a pull
+# request to main
+on:
+  pull_request:
+    branches: 
+      - main
+  
+jobs:
+
+  # Build and test the PR
+  build-test-branch:
+
+    name: "Build and Test Of PR"
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    # .NET 6 is already installed on hosted runners by default. If 
+    # it was missing, you can use the step below to install it
+    #- name: Setup .NET Core 6
+    #  uses: actions/setup-dotnet@v1
+    #  with:
+    #    dotnet-version: 6.0.x
+    
+    - name: Restore Dependencies
+      run: dotnet restore "${{ github.workspace }}/src/mywebapp.sln"
+    
+    - name: Build
+      run: dotnet build "${{ github.workspace }}/src/mywebapp.sln" --configuration Release --no-restore
+    
+    - name: Test
+      run: |
+        dotnet test "${{ github.workspace }}/src/mywebapp.sln" --no-restore --logger:"junit;LogFilePath=${{ github.workspace }}/results/test-results.xml"
+
+    # create a test summary markdown file 
+    # if you don't specify an output file, it will automatically add 
+    # as a job summary. If you specify an output file, you have to 
+    # create your own step of adding it to the job summary. I am 
+    # intentionally doing that to show job summaries
+    - name: Create test summary
+      uses: test-summary/action@v1
+      with:
+        paths: ${{ github.workspace }}/results/*.xml
+        output: ${{ github.workspace }}/results/summary.md
+      if: always()
+
+    # I am adding the test results to the Job Summary
+    - name: Add Test Results To Job Summary
+      run: |
+        echo "TEST RESULTS:" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+        cat "${{ github.workspace }}/results/summary.md" >> $GITHUB_STEP_SUMMARY
+      if: always()
+
+    # I am publishing the artifacts, and also adding to job summary
+    - name: Publish Artifacts To Workflow
+      run: |
+        dotnet publish "${{ github.workspace }}/src/mywebapp/mywebapp.csproj" -c Release -o mywebapp-files
+        echo "I've created my artifacts to upload" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        # Artifact name
+        name: mywebappbuildartifacts
+        # A file, directory or wildcard pattern that describes what to upload
+        path: mywebapp-files/**
+        # The desired behavior if no files are found using the provided path.
+        if-no-files-found: error
+        # Duration after which artifact will expire in days. 0 means using default retention.
+        retention-days: 90
