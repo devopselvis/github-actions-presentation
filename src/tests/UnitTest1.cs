@@ -25,43 +25,13 @@ namespace tests
         }
 
         [Fact]
-        public void PassesTestFour()
-        {
-            Assert.Equal("world", "world" + "");
-        }
-
-        [Fact]
-        public void FailsTestFive()
+        public void FailsTestFour()
         {
             Assert.Equal(42, (42 + 1));
         }
 
-        [Fact]
-        public void FailsTestSix()
-        {
-            Assert.Equal(99, (99 - 1));
-        }
-
-        [Fact]
-        public void FailsTestSeven()
-        {
-            Assert.Equal("hello", "wo" + "rld");
-        }
-
-        [Fact]
-        public void FailsTestEight()
-        {
-            Assert.Equal("world", "hello" + "");
-        }
-
-        [Fact(Skip="skips test nine")]
-        public void SkipsTestNine()
-        {
-            Assert.Equal(42, 99);
-        }
-
-        [Fact(Skip="skips test ten")]
-        public void SkipsTestTen()
+        [Fact(Skip="skips test five")]
+        public void SkipsTestFive()
         {
             Assert.Equal(72, 72);
         }
