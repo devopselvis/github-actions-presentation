@@ -55,12 +55,14 @@ jobs:
         output: ${{ github.workspace }}/results/summary.md
       if: always()
 
+    # I am adding the test results to the Job Summary
     - name: Add Test Results To Job Summary
       run: |
         echo "TEST RESULTS:" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
         cat "${{ github.workspace }}/results/summary.md" >> $GITHUB_STEP_SUMMARY
 
+    # I am publishing the artifacts, and also adding to job summary
     - name: Publish Artifacts To Workflow
       run: |
         dotnet publish "${{ github.workspace }}/src/mywebapp/mywebapp.csproj" -c Release -o mywebapp-files
