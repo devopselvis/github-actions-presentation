@@ -41,7 +41,7 @@ jobs:
 
   job-4:
     name: Job 4
-    if: {{ always() }}
+    if: ${{ always() }}
     runs-on: ubuntu-latest
     needs:
       - job-2
