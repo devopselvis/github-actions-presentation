@@ -31,7 +31,7 @@ jobs:
 
   job-3:
     name: Job 3
-    if: github.event.inputs.run-job-3 == 'octo-org/octo-repo-prod'
+    if: github.event.inputs.run-job-3 == 'true'
     runs-on: ubuntu-latest
     needs:
       - job-1
