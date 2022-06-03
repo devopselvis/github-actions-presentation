@@ -43,7 +43,7 @@ jobs:
     # Runs a single command using the runners shell
     - name: Send greeting
       run: |
-        echo "Hello ${{ github.event.inputs.name }}" # Outputs the input parameter, by accessing the github context object
-        echo "Your favorite city is ${{ github.event.inputs.city"
-        echo "Is your favorite color blue: ${{ github.event.inputs.fav-color-blue"
+        echo "Hello ${{ github.event.inputs.name }}" 
+        echo "Your favorite city is ${{ github.event.inputs.city }}"
+        echo "Is your favorite color blue: ${{ github.event.inputs.fav-color-blue }}"
 

@@ -1,0 +1,43 @@
+# Display name of workflow
+name: Chaining Jobs
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI or API.
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      run-job-3:
+        description: "Run job 3"
+        required: true
+        type: boolean
+
+jobs:
+
+  job-1:
+    name: Job 1
+    runs-on: ubuntu-latest
+    steps:
+    - name: Output for Job 1
+      run: echo "Hello from Job 1" 
+
+  job-2:
+    name: Job 2
+    runs-on: ubuntu-latest
+    steps:
+    - name: Output for Job 2
+      run: echo "Hello from Job 2"
+
+  job-3:
+    name: Job 3
+    runs-on: ubuntu-latest
+    steps:
+    - name: Output for Job 3
+      run: echo "Hello from Job 3"
+
+  job-4:
+    name: Job 4
+    runs-on: ubuntu-latest
+    steps:
+    - name: Output for Job 4
+      run: echo "Hello from Job 4"
+        
