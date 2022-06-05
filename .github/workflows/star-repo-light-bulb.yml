@@ -1,0 +1,61 @@
+name: Star The Repo
+
+on:
+  workflow_dispatch:
+  watch:
+    types:
+      - started
+
+jobs:
+
+  change-the-bulb-color:
+    name: Change the Demo Bulb Color
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+      - name: Find Random Color
+        id: find-random-color
+        run: |
+          RN=$(( $RANDOM % 9 + 1 ))
+          case $RN in
+            1)
+              COLOR="white"
+              ;;
+            2)
+              COLOR="red"
+              ;;
+            3)
+              COLOR="orange"
+              ;;
+            4)
+              COLOR="yellow"
+              ;;
+            5)
+              COLOR="cyan"
+              ;;
+            6)
+              COLOR="green"
+              ;;
+            7)
+              COLOR="blue"
+              ;;
+            8)
+              COLOR="purple"
+              ;;
+            9)
+              COLOR="pink"
+              ;;
+            *)
+              COLOR="THIS IS BAD"
+              ;;
+          esac
+          echo $RN
+          echo $COLOR
+          
+          echo "::set-output name=bulbcolor::$COLOR"
+    
+      - name: Change the bulb color
+        run: |
+          curl -X PUT "https://api.lifx.com/v1/lights/${{ secrets.OFFICE_LIGHT_BULB }}/state" -H "Authorization: Bearer ${{ secrets.LIFX_PAT}}" -d "color=${{ steps.find-random-color.outputs.bulbcolor }}"
