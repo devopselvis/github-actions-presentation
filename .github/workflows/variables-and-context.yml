@@ -20,7 +20,7 @@ on:
 jobs:
   # This workflow contains a single job called "greet"
   greet:
-    runs-on: unbuntu-latest  # uses the variable defined in the matrix to set the runs-on statement
+    runs-on: ubuntu-latest  # uses the variable defined in the matrix to set the runs-on statement
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
