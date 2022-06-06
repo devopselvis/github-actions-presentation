@@ -19,7 +19,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
-  greet:
+  job1:
     runs-on: ubuntu-latest  # uses the variable defined in the matrix to set the runs-on statement
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -29,4 +29,27 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
       
-      
+      #access/set env variables
+
+      #step/job output variables
+  job2:
+    runs-on: ubuntu-latest
+    
+    outputs:
+      output1: ${{ steps.step1.outputs.step1-value }}
+      output2: ${{ steps.step2.outputs.step2-value }}
+    
+    steps:
+      - name: Step 1
+        id: step1
+        run: echo "::set-output name=step1-value::hello"
+
+      - name: Step 2
+        id: step2
+        run: echo "::set-output name=step1-value::world"
+  
+  job3:
+    runs-on: ubuntu-latest
+    needs: job2
+    steps:
+      - run: echo ${{needs.job1.outputs.output1}} ${{needs.job1.outputs.output2}}
