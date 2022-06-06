@@ -46,7 +46,7 @@ jobs:
 
       - name: Step 2
         id: step2
-        run: echo "::set-output name=step1value::world"
+        run: echo "::set-output name=step2value::world"
   
   job3:
     runs-on: ubuntu-latest
