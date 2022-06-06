@@ -17,7 +17,9 @@ on:
         required: true
 
 env:
-  WORKFLOW_LEVEL_VAR: myworkflow
+  VAR1: myworkflowvar1
+  VAR2: myworkflowvar2
+  VAR3: myworkflowvar3
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -58,8 +60,19 @@ jobs:
   # access/set env variables
   job4:
     runs-on: ubuntu-latest
+    env:
+      VAR2: myjobvar2
+      VAR3: myjobvar3
     steps:
 
       - run: |
-          echo $WORKFLOW_LEVEL_VAR
-          echo ${{env.WORKFLOW_LEVEL_VAR}}
+          echo $VAR1
+          echo ${{env.VAR1}}
+
+          echo ""
+
+          echo $VAR2
+
+          echo $VAR3
+        env: 
+          VAR3: mystepvar3
