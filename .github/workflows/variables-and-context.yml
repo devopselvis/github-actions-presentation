@@ -16,11 +16,14 @@ on:
         # Input has to be provided for the workflow to run
         required: true
 
+env:
+  WORKFLOW_LEVEL_VAR: myworkflow
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
+
   job1:
-    runs-on: ubuntu-latest  # uses the variable defined in the matrix to set the runs-on statement
+    runs-on: ubuntu-latest 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -29,9 +32,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
       
-      #access/set env variables
-
-      #step/job output variables
+  #step/job output variables
   job2:
     runs-on: ubuntu-latest
     
@@ -53,3 +54,12 @@ jobs:
     needs: job2
     steps:
       - run: echo ${{needs.job2.outputs.output1}} ${{needs.job2.outputs.output2}}
+
+  # access/set env variables
+  job4:
+    runs-on: ubuntu-latest
+    steps:
+
+      - run: |
+          echo $WORKFLOW_LEVEL_VAR
+          echo ${{env.WORKFLOW_LEVEL_VAR}}
