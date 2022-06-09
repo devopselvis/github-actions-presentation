@@ -1,5 +1,5 @@
 # Name of workflow
-name: MyWebApp - Pull Request Workflow
+name: MyWebApp - Pull Request Workflow - Composite Action
 
 # Workflow trigger event. We want the workflow to trigger on a pull
 # request to main
