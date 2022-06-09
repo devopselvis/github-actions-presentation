@@ -1,0 +1,30 @@
+# Name of workflow
+name: MyWebApp - Pull Request Workflow
+
+# Workflow trigger event. We want the workflow to trigger on a pull
+# request to main
+on:
+  pull_request:
+    branches: 
+      - main
+  
+jobs:
+
+  # Build and test the PR
+  build-test-branch:
+
+    name: "Build and Test Of PR"
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Build / Test / Publish / Upload Code
+      uses: mickeygoussetorg/github-actions-presentation-composite-action@main
+      with:
+        solution: "${{ github.workspace }}/src/mywebapp.sln"
+        config: "Release"
+        cs-proj-file: "${{ github.workspace }}/src/mywebapp/mywebapp.csproj"
+        published-files: mywebapp
+
+   
