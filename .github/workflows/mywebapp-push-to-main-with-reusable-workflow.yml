@@ -1,0 +1,77 @@
+# Name of workflow
+name: MyWebApp - Push To Main - Reusable Workflow
+
+# Workflow trigger event. We want the workflow to trigger on a pull
+# request to main
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - main
+      
+permissions:
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+  
+jobs:
+
+  # Build and test the PR
+  build-app:
+
+    name: "Build Test Of PR using Composite Action"
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Build / Test / Publish / Upload Code
+      uses: mickeygoussetorg/github-actions-presentation-composite-action@main
+      with:
+        solution: "${{ github.workspace }}/src/mywebapp.sln"
+        config: "Release"
+        cs-proj-file: "${{ github.workspace }}/src/mywebapp/mywebapp.csproj"
+        published-files: mywebapp
+        
+  deploy-to-dev:
+    name: Deploy to DEV environment
+    needs: 
+      - build-app
+    uses: mickeygoussetorg/github-actions-presentation/.github/workflows/mywebapp-reusable-workflow-deploy-web-app.yml@main
+    with:
+      runs-on: ubuntu-latest
+      artifact-to-deploy: mywebapp
+      env-name: DEV
+      env-url: https://github-actions-talk-dev.azurewebsites.net
+      app-name: github-actions-talk-dev
+    secrets: inherit
+    
+  deploy-to-staging:
+    name: Deploy to STAGING environment
+    needs: 
+      - build-app
+    uses: mickeygoussetorg/github-actions-presentation/.github/workflows/mywebapp-reusable-workflow-deploy-web-app.yml@main
+    with:
+      runs-on: ubuntu-latest
+      artifact-to-deploy: mywebapp
+      env-name: STAGING
+      env-url: https://github-actions-talk-staging.azurewebsites.net
+      app-name: github-actions-talk-staging
+    secrets: inherit
+    
+  deploy-to-prod:
+    name: Deploy to PROD environment
+    needs: 
+      - deploy-to-dev
+      - deploy-to-staging
+    uses: mickeygoussetorg/github-actions-presentation/.github/workflows/mywebapp-reusable-workflow-deploy-web-app.yml@main
+    with:
+      runs-on: ubuntu-latest
+      artifact-to-deploy: mywebapp
+      env-name: PROD
+      env-url: https://github-actions-talk-prod.azurewebsites.net
+      app-name: github-actions-talk-prod
+    secrets: inherit
+      
