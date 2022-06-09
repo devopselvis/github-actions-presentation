@@ -13,7 +13,7 @@ jobs:
   # Build and test the PR
   build-test-branch:
 
-    name: "Build and Test Of PR"
+    name: "Build Test Of PR using Composite Action"
 
     runs-on: ubuntu-latest
 
