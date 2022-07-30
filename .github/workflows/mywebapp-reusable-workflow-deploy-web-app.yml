@@ -1,4 +1,4 @@
-name: Deploy Web App
+name: Deploy Web App - Reusable Workflow
 
 on:
   workflow_call:
