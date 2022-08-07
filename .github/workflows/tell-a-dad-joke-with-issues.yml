@@ -1,0 +1,26 @@
+name: Tell A Dad Joke With Issues
+
+on:
+  issue_comment:
+    types: 
+      - created
+
+
+jobs:
+
+  Add-Dad-Joke-To-Issue-Comment:
+
+    runs-on: ubuntu-latest
+
+    if: ${{ startsWith(github.event.comment.body, '/joke') }}
+    steps:
+
+      - id: getdadjoke
+        uses: mickeygoussetorg/get-a-dad-joke@v1
+        
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ${{ github.event.comment.user.login }}, here is your DAD JOKE - "${{ steps.getdadjoke.outputs.dad-joke }}"
