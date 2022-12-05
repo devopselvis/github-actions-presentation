@@ -24,18 +24,6 @@ namespace tests
             Assert.Equal("hello", "he" + "llo");
         }
 
-        [Fact]
-        public void FailsTestFour()
-        {
-            Assert.Equal(42, (42 + 1));
-        }
-
-        [Fact]
-        public void FailsTestFive()
-        {
-            Assert.Equal(42, (42 + 2));
-        }
-
         [Fact(Skip="skips test six")]
         public void SkipsTestSix()
         {
