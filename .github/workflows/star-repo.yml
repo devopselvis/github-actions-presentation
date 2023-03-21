@@ -56,7 +56,10 @@ jobs:
           
           # echo "::set-output name=bulbcolor::$COLOR"
           echo "bulb-color=$COLOR" >> $GITHUB_OUTPUT
-    
+
+      - name: Output var
+        run: echo ${{ steps.find-random-color.outputs.bulbcolor }}
+
       - name: Change the bulb color
         run: |
-          curl -X PUT "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/state" -H "Authorization: Bearer ${{secrets.LIFX_TOKEN}}" -H "Content-Type: application/x-www-form-urlencoded" -d "color=${{ steps.find-random-color.outputs.bulbcolor }}"
+          curl -X PUT "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/state" -H "Authorization: Bearer ${{secrets.LIFX_TOKEN}}" -H "Content-Type: application/x-www-form-urlencoded" -d "color=blue"
