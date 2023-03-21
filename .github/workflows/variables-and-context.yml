@@ -45,11 +45,13 @@ jobs:
     steps:
       - name: Step 1
         id: step1
-        run: echo "::set-output name=step1value::hello"
+        # run: echo "::set-output name=step1value::hello"
+        run: echo "step1value=hello" >> $GITHUB_OUTPUT
 
       - name: Step 2
         id: step2
-        run: echo "::set-output name=step2value::world"
+        # run: echo "::set-output name=step2value::world"
+        run: echo "step2value=world" >> $GITHUB_OUTPUT
   
   job3:
     runs-on: ubuntu-latest
