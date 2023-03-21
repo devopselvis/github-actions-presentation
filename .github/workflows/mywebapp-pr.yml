@@ -21,7 +21,8 @@ jobs:
     
     - name: Start Build Indicator
       run: |
-        curl -X POST "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/effects/breathe" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'color=orange' -d 'period=4' -d 'cycles=450'
+        curl -X PUT "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/state" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'color=purple'
+        curl -X POST "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/effects/breathe" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'color=purple' -d 'period=4' -d 'cycles=450'
       
     - uses: actions/checkout@v2
 
