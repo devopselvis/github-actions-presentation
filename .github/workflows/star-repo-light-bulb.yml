@@ -54,7 +54,8 @@ jobs:
           echo $RN
           echo $COLOR
           
-          echo "::set-output name=bulbcolor::$COLOR"
+          # echo "::set-output name=bulbcolor::$COLOR"
+          echo "bulb-color=$COLOR" >> $GITHUB_OUTPUT
     
       - name: Change the bulb color
         run: |
