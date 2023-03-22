@@ -1,4 +1,4 @@
-# Name of workflow
+# Name of workflow 
 name: MyWebApp - Pull Request Workflow
 
 # Workflow trigger event. We want the workflow to trigger on a pull
