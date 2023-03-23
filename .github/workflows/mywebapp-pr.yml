@@ -1,4 +1,4 @@
-# Name of workflow
+# Name of workflow 
 name: MyWebApp - Pull Request Workflow
 
 # Workflow trigger event. We want the workflow to trigger on a pull
@@ -18,7 +18,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
+    
+    - name: Start Build Indicator
+      run: |
+        curl -X POST "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/effects/breathe" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'color=blue' -d 'period=4' -d 'cycles=450' -d 'from_color=pink'
+      
     - uses: actions/checkout@v2
 
     # .NET 6 is already installed on hosted runners by default. If 
@@ -75,3 +79,16 @@ jobs:
         if-no-files-found: error
         # Duration after which artifact will expire in days. 0 means using default retention.
         retention-days: 90
+        
+    - name: Final build status indicator
+      if: success()
+      run: | 
+        curl -X POST "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/effects/off" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'power_off=false'
+        curl -X PUT "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/state" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'color=green'
+        
+    - name: Final build status indicator
+      if: failure()
+      run: | 
+        curl -X POST "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/effects/off" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'power_off=false'
+        curl -X PUT "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/state" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'color=red'
+        
