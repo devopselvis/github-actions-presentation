@@ -19,6 +19,11 @@ jobs:
 
     steps:
     
+    - name: Start Build Indicator
+      run: |
+        curl -X POST "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/effects/breathe" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'color=blue' -d 'period=4' -d 'cycles=450' -d 'from_color=pink'
+      
+    
     - name: Build / Test / Publish / Upload Code
       uses: mickeygoussetorg/github-actions-presentation-composite-action@main
       with:
@@ -27,4 +32,16 @@ jobs:
         cs-proj-file: "${{ github.workspace }}/src/mywebapp/mywebapp.csproj"
         published-files: mywebapp
 
+    - name: Final build status indicator
+      if: success()
+      run: | 
+        curl -X POST "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/effects/off" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'power_off=false'
+        curl -X PUT "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/state" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'color=green'
+        
+    - name: Final build status indicator
+      if: failure()
+      run: | 
+        curl -X POST "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/effects/off" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'power_off=false'
+        curl -X PUT "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/state" -H "Authorization: Bearer ${{ secrets.LIFX_TOKEN }}" -d 'color=red'
+        
    
