@@ -1,0 +1,35 @@
+# I am a workflow that demonstrates how to output the different context objects
+
+name: mickey test
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+     
+  #step/job output variables
+  job2:
+    runs-on: ubuntu-latest
+    
+    outputs:
+      output1: ${{ steps.step1.outputs.step1value }}
+    
+    steps:
+      - name: Step 1
+        id: step1
+        # run: echo "::set-output name=step1value::hello"
+        run: echo "step1value=hello" >> $GITHUB_OUTPUT
+
+  
+  job3:
+    runs-on: ubuntu-latest
+    if: needs.job1.outputs.output1 != ""
+    needs: job2
+    steps:
+      - run: echo "YES!"
+
+ 
