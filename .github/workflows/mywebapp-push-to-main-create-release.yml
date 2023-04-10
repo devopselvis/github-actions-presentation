@@ -22,7 +22,7 @@ jobs:
     
     - name: Build / Test / Publish / Upload Code
       id: build-code
-      uses: mickeygoussetorg/github-actions-presentation-composite-action@release-demo
+      uses: mickeygoussetorg/github-actions-presentation-composite-action@main
       with:
         solution: "${{ github.workspace }}/src/mywebapp.sln"
         config: "Release"
