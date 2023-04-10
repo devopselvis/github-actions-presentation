@@ -3,6 +3,7 @@
 # github-actions-presentation
 I contain all the slides and demos for both an Introduction and Advanced GitHub Actions Talk
 
+
 ## Resetting the demo env:
 
 git reset --hard <the latest version>
