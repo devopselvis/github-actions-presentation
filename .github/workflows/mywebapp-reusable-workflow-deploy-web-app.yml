@@ -55,7 +55,7 @@ jobs:
 
     - name: Download Release
       run: |
-        gh release download ${{intputs.version-number}} --archive=zip --output ${{ inputs.artifact-to-deploy }}.zip
+        gh release download ${{inputs.version-number}} --archive=zip --output ${{ inputs.artifact-to-deploy }}.zip
         
     # Deploy to Azure Web apps
     - name: 'Run Azure webapp deploy action using publish profile credentials'
