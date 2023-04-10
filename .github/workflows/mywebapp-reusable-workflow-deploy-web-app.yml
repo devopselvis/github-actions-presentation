@@ -19,6 +19,9 @@ on:
       app-name:
         required: true
         type: string
+      version-number:
+        required: true
+        type: string
   
 
 jobs:
@@ -42,19 +45,23 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         
-    - name: Download a Build Artifact
-      uses: actions/download-artifact@v2.0.8
-      with:
-        # Artifact name
-        name: ${{ inputs.artifact-to-deploy }}
-        # Destination path
-        path: ${{ inputs.artifact-to-deploy }}
+#    - name: Download a Build Artifact
+#      uses: actions/download-artifact@v2.0.8
+#      with:
+#        # Artifact name
+#        name: ${{ inputs.artifact-to-deploy }}
+#        # Destination path
+#        path: ${{ inputs.artifact-to-deploy }}
+
+    - name: Download Release
+      run: |
+        gh release download ${{intputs.version-number}} --archive=zip --output ${{ inputs.artifact-to-deploy }}.zip
         
     # Deploy to Azure Web apps
     - name: 'Run Azure webapp deploy action using publish profile credentials'
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ inputs.app-name }}
-        package: ${{ inputs.artifact-to-deploy }}
+        package: ${{ inputs.artifact-to-deploy }}.zip
         
 
