@@ -5,6 +5,7 @@ I contain all the slides and demos for both an Introduction and Advanced GitHub 
 
 
 
+
 ## Resetting the demo env:
 
 git reset --hard <the latest version>
