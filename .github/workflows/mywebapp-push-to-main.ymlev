@@ -94,7 +94,7 @@ jobs:
     
     environment:
       name: 'DEV'
-      url: 'https://github-actions-talk-dev.azurewebsites.net'
+      url: 'https://gapdemodev.azurewebsites.net'
 
     steps:
     - uses: actions/checkout@v2
@@ -118,7 +118,7 @@ jobs:
     - name: 'Deploy to DEV Azure webapp using OIDC'
       uses: azure/webapps-deploy@v2
       with: 
-        app-name: github-actions-talk-dev # Replace with your app name
+        app-name: gapdemodev # Replace with your app name
         package: 'mywebappbuildartifacts' 
 
   deploy-to-staging:
@@ -132,7 +132,7 @@ jobs:
     
     environment:
       name: 'STAGING'
-      url: 'https://github-actions-talk-staging.azurewebsites.net'
+      url: 'https://gapdemostaging.azurewebsites.net'
 
     steps:
     - uses: actions/checkout@v2
@@ -156,7 +156,7 @@ jobs:
     - name: 'Deploy to STAGING Azure webapp using OIDC'
       uses: azure/webapps-deploy@v2
       with: 
-        app-name: github-actions-talk-staging # Replace with your app name
+        app-name: gapdemostaging # Replace with your app name
         package: 'mywebappbuildartifacts'
 
   deploy-to-prod:
@@ -171,7 +171,7 @@ jobs:
     
     environment:
       name: 'PROD'
-      url: 'https://github-actions-talk-prod.azurewebsites.net'
+      url: 'https://gapdemoprod.azurewebsites.net'
 
     steps:
     - uses: actions/checkout@v2
@@ -195,5 +195,5 @@ jobs:
     - name: 'Deploy to prod Azure webapp using OIDC'
       uses: azure/webapps-deploy@v2
       with: 
-        app-name: github-actions-talk-prod # Replace with your app name
+        app-name: gapdemoprod # Replace with your app name
         package: 'mywebappbuildartifacts'
