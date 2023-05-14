@@ -24,8 +24,8 @@ jobs:
       runs-on: ubuntu-latest
       artifact-to-deploy: mywebapp
       env-name: DEV
-      env-url: https://github-actions-talk-dev.azurewebsites.net
-      app-name: github-actions-talk-dev
+      env-url: https://gapdemodev.azurewebsites.net
+      app-name: gapdemodev
       version-number: ${{github.event.release.tag_name}}
     secrets: inherit
     
@@ -36,8 +36,8 @@ jobs:
       runs-on: ubuntu-latest
       artifact-to-deploy: mywebapp
       env-name: STAGING
-      env-url: https://github-actions-talk-staging.azurewebsites.net
-      app-name: github-actions-talk-staging
+      env-url: https://gapdemostaging.azurewebsites.net
+      app-name: gapdemostaging
       version-number: ${{github.event.release.tag_name}}
     secrets: inherit
     
@@ -51,8 +51,8 @@ jobs:
       runs-on: ubuntu-latest
       artifact-to-deploy: mywebapp
       env-name: PROD
-      env-url: https://github-actions-talk-prod.azurewebsites.net
-      app-name: github-actions-talk-prod
+      env-url: https://gapdemoprod.azurewebsites.net
+      app-name: gapdemoprod
       version-number: ${{github.event.release.tag_name}}
     secrets: inherit
       
