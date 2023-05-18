@@ -94,7 +94,7 @@ jobs:
     
     environment:
       name: 'DEV'
-      url: 'https://github-actions-talk-dev.azurewebsites.net'
+      url: 'https://gapdemodev.azurewebsites.net'
 
     steps:
     - uses: actions/checkout@v2
@@ -132,7 +132,7 @@ jobs:
     
     environment:
       name: 'STAGING'
-      url: 'https://github-actions-talk-staging.azurewebsites.net'
+      url: 'https://gapdemodev.azurewebsites.net'
 
     steps:
     - uses: actions/checkout@v2
@@ -171,7 +171,7 @@ jobs:
     
     environment:
       name: 'PROD'
-      url: 'https://github-actions-talk-prod.azurewebsites.net'
+      url: 'https://gapdemodev.azurewebsites.net'
 
     steps:
     - uses: actions/checkout@v2
