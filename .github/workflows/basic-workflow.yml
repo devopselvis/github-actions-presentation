@@ -34,13 +34,13 @@ on:
 jobs:
   # This workflow contains a single job called "greet"
   greet:
-    # The type of runner that the job will run on, in this case a Linus hosted runner
+    # The type of runner that the job will run on, in this case a Linux hosted runner
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
-    # Runs a single command using the runners shell
+    # Runs a single command using the runner's shell
     - name: Send greeting
       run: |
         echo "Hello ${{ github.event.inputs.name }}" 
