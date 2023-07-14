@@ -1,6 +1,6 @@
 # I am a workflow that demonstrates how to output the different context objects
 
-name: Variables and Context
+name: test case
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
