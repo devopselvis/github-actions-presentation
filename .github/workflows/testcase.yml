@@ -1,0 +1,35 @@
+# I am a workflow that demonstrates how to output the different context objects
+
+name: Variables and Context
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+
+env:
+  VAR1: foo
+  var1: bar
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  job1:
+    runs-on: ubuntu-latest 
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+      - run: |
+          echo ${{env.VAR1}}
+          echo ${{env.var1}}
+
+job2:
+    runs-on: windows-latest
+    
+    steps:
+    
+      - run: |
+          echo ${{env.VAR1}}
+          echo ${{env.var1}}
+    
