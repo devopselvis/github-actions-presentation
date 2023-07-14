@@ -9,7 +9,7 @@ on:
 
 env:
   VAR1: foo
-  var1: bar
+  var2: bar
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -25,11 +25,16 @@ jobs:
 #          echo ${{env.var1}}
 
   job2:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
     
       - run: |
           echo ${{env.VAR1}}
-          echo ${{env.var1}}
+          echo ${{env.var2}}
+          echo ${{env.VAR3}}
+          echo ${{env.var3}}
+        env: 
+          VAR3: mystepvar3
+          var3: noway
     
