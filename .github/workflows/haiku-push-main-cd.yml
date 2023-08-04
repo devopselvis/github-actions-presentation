@@ -65,7 +65,7 @@ jobs:
     - name: Copy files for deployment
       run: |
         mkdir deploy
-        cp -r package.json index.js haikus.json web.config server.js process.json package-lock.json node_modules/ views/ public/ deploy/
+        cp -r package.json index.js haikus.json web.config server.js process.json package-lock.json node_modules/ views/ public/images public/css deploy/
       working-directory: haiku-src
 
     - name: Upload deployment package
