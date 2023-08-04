@@ -38,6 +38,9 @@ jobs:
       run: npm test
       working-directory: haiku-src
 
+    - name: delete me - checking folder structure
+      run: ls -R
+
     - name: Create Test Summary
       uses: test-summary/action@v2.1
       with:
