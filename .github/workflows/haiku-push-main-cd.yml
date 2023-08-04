@@ -72,8 +72,6 @@ jobs:
         name: deployment-package
         path: haiku-src/deploy/
       
-    #################################
-
     - name: 'Login via Azure OIDC'
       uses: azure/login@v1.4.6
       with:
