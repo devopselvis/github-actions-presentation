@@ -53,7 +53,7 @@ jobs:
     - name: Write test output to job summary
       run: |
         echo "Test Results:" >> $GITHUB_ENV
-        cat ${{github.workspace}}/haiku-src/summary.md >> $GITHUB_ENV
+        cat ${{github.workspace}}/haiku-src/summary.md >> $GITHUB_STEP_SUMMARY
       if: always()
 
     - name: Copy files for deployment
