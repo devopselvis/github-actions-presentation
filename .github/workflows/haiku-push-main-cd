@@ -1,0 +1,88 @@
+name: Haiku Push Main CD
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'haiku-src/**'
+
+jobs:
+  build-and-test-haiku-on-push:
+
+    name: Build and test haiku on push
+
+    runs-on: ubuntu-latest
+
+    environment:
+      name: 'DEV'
+      url: 'https://gapdemodev.azurewebsites.net'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3.5.3
+
+    - name: Install dependencies
+      run: npm ci
+      working-directory: haiku-src
+
+    - name: Install supertest
+      run: npm install supertest --save-dev
+      working-directory: haiku-src
+
+    - name: Install mocha
+      run: npm install mocha --save-dev
+      working-directory: haiku-src
+
+    - name: Install mocha junit reporter
+      run: npm install mocha-junit-reporter --save-dev
+      working-directory: haiku-src
+
+    - name: Install chai
+      run: npm install chai --save-dev
+      working-directory: haiku-src
+
+    - name: Run tests
+      run: npm test 
+      working-directory: haiku-src
+
+    - name: Create Test Summary
+      uses: test-summary/action@v2.1
+      with:
+        paths: ${{github.workspace}}/haiku-src/test-results.xml
+        output: ${{github.workspace}}/haiku-src/summary.md
+        show: all
+      if: always()
+
+    - name: Write test output to job summary
+      run: |
+        echo "Test Results:" >>  $GITHUB_STEP_SUMMARY
+        cat ${{github.workspace}}/haiku-src/summary.md >> $GITHUB_STEP_SUMMARY
+      if: always()
+
+    - name: Copy files for deployment
+      run: |
+        mkdir deploy
+        cp -r package.json index.js haikus.json web.config views/ public/ deploy/
+      working-directory: haiku-src
+
+    - name: Upload deployment package
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: deployment-package
+        path: haiku-src/deploy/
+      
+    #################################
+
+    - name: 'Login via Azure OIDC'
+      uses: azure/login@v1.4.6
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: 'Deploy to DEV Azure webapp using OIDC'
+      uses: azure/webapps-deploy@v2.2.10
+      with: 
+        app-name: gapdemodev # Replace with your app name
+        package: ${{github.workspace}}/haiku-src/deploy/
