@@ -35,24 +35,21 @@ jobs:
       working-directory: haiku-src
 
     - name: Run tests
-      run: npm test
+      run: npm test -- --reporter junit --reporter-options output=test-results.xml
       working-directory: haiku-src
-
-    - name: delete me - checking folder structure
-      run: ls -R
 
     - name: Create Test Summary
       uses: test-summary/action@v2.1
       with:
-        paths: haiku-src/results/**/*.xml
-        output: haiku-src/results/summary.md
+        paths: ${{github.workspace}}/haiku-src/test-results.xml
+        output: ${{github.workspace}}/haiku-src/summary.md
         show: all
       if: always()
 
     - name: Write test output to job summary
       run: |
         echo "Test Results:" >> $GITHUB_ENV
-        cat haiku-src/results/summary.md >> $GITHUB_ENV
+        cat ${{github.workspace}}/haiku-src/summary.md >> $GITHUB_ENV
       if: always()
 
     - name: Copy files for deployment
