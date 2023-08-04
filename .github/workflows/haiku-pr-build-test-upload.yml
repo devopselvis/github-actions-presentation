@@ -52,7 +52,7 @@ jobs:
 
     - name: Write test output to job summary
       run: |
-        echo "Test Results:" >> $GITHUB_ENV
+        echo "Test Results:" >>  $GITHUB_STEP_SUMMARY
         cat ${{github.workspace}}/haiku-src/summary.md >> $GITHUB_STEP_SUMMARY
       if: always()
 
