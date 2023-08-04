@@ -1,18 +1,22 @@
-name: Haiku PR Build Test Upload
+name: Haiku Push Main CD
 
 on:
   workflow_dispatch:
-  pull_request:
+  push:
     branches: [ main ]
     paths:
       - 'haiku-src/**'
 
 jobs:
-  pr-build-and-test-haiku:
+  build-and-test-haiku-on-push:
 
-    name: Build and test haiku on PR
+    name: Build and test haiku on push
 
     runs-on: ubuntu-latest
+
+    environment:
+      name: 'DEV'
+      url: 'https://gapdemodev.azurewebsites.net'
 
     steps:
     - name: Checkout code
@@ -68,3 +72,15 @@ jobs:
         name: deployment-package
         path: haiku-src/deploy/
       
+    - name: 'Login via Azure OIDC'
+      uses: azure/login@v1.4.6
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: 'Deploy to DEV Azure webapp using OIDC'
+      uses: azure/webapps-deploy@v2.2.10
+      with: 
+        app-name: gapdemodev # Replace with your app name
+        package: ${{github.workspace}}/haiku-src/deploy/
