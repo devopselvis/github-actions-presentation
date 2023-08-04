@@ -1,14 +1,14 @@
 {
-    "name": "app-service-hello-world",
-    "description": "Simple Hello World Node.js sample for Azure App Service",
-    "version": "0.0.1",
+    "name": "haiku-github-actions-demo",
+    "description": "Simple Haiku Node.js sample for demoing GitHub Actions",
+    "version": "1.0.0",
     "private": true,
     "license": "MIT",
-    "author": "Microsoft",
+    "author": "mickeygousset",
     "scripts": {
         "start": "node index.js",
         "dev": "nodemon",
-        "test": "mocha haiku-tests.js"
+        "test": "mocha test/haiku-tests.js --reporter mocha-junit-reporter --reporter-options mochaFile=test-results.xml"
     },
     "dependencies": {
         "ejs": "^3.1.8",
@@ -16,6 +16,7 @@
     },
     "devDependencies": {
         "chai": "^4.3.7",
+        "mocha-junit-reporter": "^2.2.1",
         "nodemon": "^2.0.19"
     }
 }

@@ -39,7 +39,7 @@ jobs:
       working-directory: haiku-src
 
     - name: Run tests
-      run: npm test --reporter mocha-junit-reporter --reporter-options mochaFile=test-results.xml
+      run: npm test 
       working-directory: haiku-src
 
     - name: Create Test Summary
