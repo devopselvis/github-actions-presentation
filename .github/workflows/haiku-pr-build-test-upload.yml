@@ -30,6 +30,10 @@ jobs:
       run: npm install mocha --save-dev
       working-directory: haiku-src
 
+    - name: Install mocha junit reporter
+      run: npm install mocha-junit-reporter --save-dev
+      working-directory: haiku-src
+
     - name: Install chai
       run: npm install chai --save-dev
       working-directory: haiku-src
