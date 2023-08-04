@@ -38,6 +38,20 @@ jobs:
       run: npm test
       working-directory: haiku-src
 
+    - name: Create Test Summary
+      uses: test-summary/action@v2.1
+      with:
+        paths: haiku-src/results/**/*.xml
+        output: haiku-src/results/summary.md
+        show: all
+      if: always()
+
+    - name: Write test output to job summary
+      run: |
+        echo "Test Results:" >> $GITHUB_ENV
+        cat haiku-src/results/summary.md >> $GITHUB_ENV
+      if: always()
+
     - name: Copy files for deployment
       run: |
         mkdir deploy
