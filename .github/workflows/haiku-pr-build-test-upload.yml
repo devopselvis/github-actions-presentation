@@ -20,17 +20,21 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
+      working-directory: haiku-src
 
     - name: Run tests
       run: npm test
+      working-directory: haiku-src
 
     - name: Copy files for deployment
       run: |
         mkdir deploy
-        cp -r haiku-src/package.json haiku-src/index.js haiku-src/haikus.json haiku-src/web.config haiku-src/views/ haiku-src/public/ deploy/
+        cp -r package.json index.js haikus.json web.config views/ public/ deploy/
+      working-directory: haiku-src
 
     - name: Upload deployment package
       uses: actions/upload-artifact@v2
       with:
         name: deployment-package
-        path: deploy/
+        path: haiku-src/deploy/
+      
