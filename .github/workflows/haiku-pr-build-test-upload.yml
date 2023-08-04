@@ -1,0 +1,36 @@
+name: Haiku PR Build Test Upload
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'haiku-src/**'
+
+jobs:
+  pr-build-and-test-haiku:
+
+    name: Build and test haiku on PR
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3.5.3
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: npm test
+
+    - name: Copy files for deployment
+      run: |
+        mkdir deploy
+        cp -r haiku-src/package.json haiku-src/index.js haiku-src/haikus.json haiku-src/web.config haiku-src/views/ haiku-src/public/ deploy/
+
+    - name: Upload deployment package
+      uses: actions/upload-artifact@v2
+      with:
+        name: deployment-package
+        path: deploy/

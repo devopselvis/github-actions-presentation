@@ -25,4 +25,9 @@ app.get('/', (req, res) => {
   res.render('index', {haikus: haikus});
 });
 
+app.get('/haikus', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send({haikus: haikus});
+});
+
 module.exports = app;
