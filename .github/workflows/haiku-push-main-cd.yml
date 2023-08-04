@@ -73,7 +73,15 @@ jobs:
       with:
         name: deployment-package
         path: haiku-src/deploy/
-      
+    
+    - name: Download deployment package
+      uses: actions/download-artifact@v3.0.2
+      with:
+        # Artifact name
+        name: 'deployment-package'
+        # Destination path
+        path: 'deployment-package'    
+
     - name: 'Login via Azure OIDC'
       uses: azure/login@v1.4.6
       with:
@@ -85,4 +93,4 @@ jobs:
       uses: azure/webapps-deploy@v2.2.10
       with: 
         app-name: gapdemodev # Replace with your app name
-        package: ${{github.workspace}}/haiku-src/deploy/
+        package: deployment-package
