@@ -22,6 +22,10 @@ jobs:
       run: npm ci
       working-directory: haiku-src
 
+    - name: Install supertest
+      run: npm install supertest --save-dev
+      working-directory: haiku-src
+
     - name: Install mocha
       run: npm install mocha --save-dev
       working-directory: haiku-src
