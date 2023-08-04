@@ -6,7 +6,9 @@ on:
     branches: [ main ]
     paths:
       - 'haiku-src/**'
-
+permissions:
+  id-token: write
+  
 jobs:
   build-and-test-haiku-on-push:
 
