@@ -45,7 +45,7 @@ jobs:
       working-directory: haiku-src
 
     - name: Upload deployment package
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3.1.2
       with:
         name: deployment-package
         path: haiku-src/deploy/
