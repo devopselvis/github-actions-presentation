@@ -22,6 +22,14 @@ jobs:
       run: npm ci
       working-directory: haiku-src
 
+    - name: Install mocha
+      run: npm install mocha --save-dev
+      working-directory: haiku-src
+
+    - name: Install chai
+      run: npm install chai --save-dev
+      working-directory: haiku-src
+
     - name: Run tests
       run: npm test
       working-directory: haiku-src
