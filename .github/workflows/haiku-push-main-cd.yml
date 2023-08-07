@@ -6,15 +6,19 @@ on:
     branches: [ main ]
     paths:
       - 'haiku-src/**'
+
 permissions:
   id-token: write
   
+
 jobs:
   build-and-test-haiku-on-push:
 
     name: Build and test haiku on push
 
     runs-on: ubuntu-latest
+
+
 
     steps:
     - name: Checkout code
@@ -61,6 +65,7 @@ jobs:
     - name: Copy files for deployment
       run: |
         mkdir deploy
+
         cp -r package.json index.js haikus.json web.config server.js process.json package-lock.json node_modules/ views/ public/images public/css deploy/
       working-directory: haiku-src
 
@@ -69,6 +74,7 @@ jobs:
       with:
         name: deployment-package
         path: haiku-src/deploy/
+
     
 
   deploy-to-dev:
@@ -94,6 +100,7 @@ jobs:
         # Destination path
         path: 'deployment-package'    
 
+
     - name: 'Login via Azure OIDC'
       uses: azure/login@v1.4.6
       with:
@@ -105,6 +112,7 @@ jobs:
       uses: azure/webapps-deploy@v2.2.10
       with: 
         app-name: gapdemodev # Replace with your app name
+
         package: deployment-package
 
   deploy-to-staging:
@@ -179,3 +187,4 @@ jobs:
       with: 
         app-name: gapdemoprod # Replace with your app name
         package: deployment-package
+
