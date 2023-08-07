@@ -7,6 +7,10 @@ on:
     paths:
       - 'haiku-src/**'
 
+permissions:
+  id-token: write
+  
+
 jobs:
   build-and-test-haiku-on-push:
 
@@ -14,9 +18,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    environment:
-      name: 'DEV'
-      url: 'https://gapdemodev.azurewebsites.net'
+
 
     steps:
     - name: Checkout code
@@ -63,7 +65,8 @@ jobs:
     - name: Copy files for deployment
       run: |
         mkdir deploy
-        cp -r package.json index.js haikus.json web.config views/ public/ deploy/
+
+        cp -r package.json index.js haikus.json web.config server.js process.json package-lock.json node_modules/ views/ public/images public/css deploy/
       working-directory: haiku-src
 
     - name: Upload deployment package
@@ -71,7 +74,33 @@ jobs:
       with:
         name: deployment-package
         path: haiku-src/deploy/
-      
+
+    
+
+  deploy-to-dev:
+
+    name: "Deploy To Azure DEV env"
+
+    runs-on: ubuntu-latest
+    
+    needs:
+      - build-and-test-haiku-on-push
+    
+    environment:
+      name: 'DEV'
+      url: 'https://gapdemodev.azurewebsites.net'
+
+    steps:
+
+    - name: Download deployment package
+      uses: actions/download-artifact@v3.0.2
+      with:
+        # Artifact name
+        name: 'deployment-package'
+        # Destination path
+        path: 'deployment-package'    
+
+
     - name: 'Login via Azure OIDC'
       uses: azure/login@v1.4.6
       with:
@@ -83,4 +112,79 @@ jobs:
       uses: azure/webapps-deploy@v2.2.10
       with: 
         app-name: gapdemodev # Replace with your app name
-        package: ${{github.workspace}}/haiku-src/deploy/
+
+        package: deployment-package
+
+  deploy-to-staging:
+
+    name: "Deploy To Azure STAGING env"
+
+    runs-on: ubuntu-latest
+    
+    needs:
+      - build-and-test-haiku-on-push
+    
+    environment:
+      name: 'STAGING'
+      url: 'https://gapdemostaging.azurewebsites.net'
+
+    steps:
+
+    - name: Download deployment package
+      uses: actions/download-artifact@v3.0.2
+      with:
+        # Artifact name
+        name: 'deployment-package'
+        # Destination path
+        path: 'deployment-package'    
+
+    - name: 'Login via Azure OIDC'
+      uses: azure/login@v1.4.6
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: 'Deploy to STAGING Azure webapp using OIDC'
+      uses: azure/webapps-deploy@v2.2.10
+      with: 
+        app-name: gapdemostaging # Replace with your app name
+        package: deployment-package
+
+  deploy-to-prod:
+
+    name: "Deploy To Azure PROD env"
+
+    runs-on: ubuntu-latest
+    
+    needs:
+      - deploy-to-dev
+      - deploy-to-staging
+    
+    environment:
+      name: 'PROD'
+      url: 'https://gapdemoprod.azurewebsites.net'
+
+    steps:
+
+    - name: Download deployment package
+      uses: actions/download-artifact@v3.0.2
+      with:
+        # Artifact name
+        name: 'deployment-package'
+        # Destination path
+        path: 'deployment-package'    
+
+    - name: 'Login via Azure OIDC'
+      uses: azure/login@v1.4.6
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: 'Deploy to PROD Azure webapp using OIDC'
+      uses: azure/webapps-deploy@v2.2.10
+      with: 
+        app-name: gapdemoprod # Replace with your app name
+        package: deployment-package
+
