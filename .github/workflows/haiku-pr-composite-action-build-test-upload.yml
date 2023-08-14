@@ -1,0 +1,22 @@
+name: Haiku PR - Composite Action -  Build Test Upload
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'haiku-src/**'
+
+jobs:
+  pr-composite-action-build-and-test-haiku:
+
+    name: Build and test haiku on PR using Composite Action
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build, test, and deploy Haiku
+      uses: mickeygoussetorg/haiku-composite-action-build-test-upload-results@main
+      with:
+        haiku-src-path: 'haiku-src'
+      
