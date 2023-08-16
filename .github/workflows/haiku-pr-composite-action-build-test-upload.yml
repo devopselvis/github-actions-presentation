@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Build, test, and deploy Haiku
-      uses: mickeygoussetorg/haiku-composite-action-build-test-upload-results@main
-      with:
-        haiku-src-path: 'haiku-src'
+      - name: Build, test, and create deployment files for Haiku
+        uses: mickeygoussetorg/haiku-composite-action-build-test-upload-results@main
+        with:
+          haiku-src-path: 'haiku-src'
       
