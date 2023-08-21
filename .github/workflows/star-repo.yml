@@ -62,4 +62,4 @@ jobs:
 
       - name: Change the bulb color
         run: |
-          curl -X PUT "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/state" -H "Authorization: Bearer ${{secrets.LIFX_TOKEN}}" -H "Content-Type: application/x-www-form-urlencoded" -d "color=${{ steps.find-random-color.outputs.bulbcolor }}"
+          curl --fail-with-body -X PUT "https://api.lifx.com/v1/lights/${{ vars.LIFX_BULB_LOCATION }}/state" -H "Authorization: Bearer ${{secrets.LIFX_TOKEN}}" -H "Content-Type: application/x-www-form-urlencoded" -d "color=${{ steps.find-random-color.outputs.bulbcolor }}"
