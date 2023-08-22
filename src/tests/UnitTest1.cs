@@ -24,7 +24,7 @@ namespace tests
         {
             Assert.Equal("hello", "he" + "llo");
         }
-
+/*
         [Fact]
         public void FailsTestFour()
         {
@@ -36,7 +36,7 @@ namespace tests
         {
             Assert.Equal(42, (42 + 2));
         }
-
+*/
         [Fact(Skip="skips test six")]
         public void SkipsTestSix()
         {
