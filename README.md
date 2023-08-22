@@ -8,3 +8,4 @@ I contain all the slides and demos for both an Introduction and Advanced GitHub 
 git reset --hard <the latest version>
 git push --force
 
+
