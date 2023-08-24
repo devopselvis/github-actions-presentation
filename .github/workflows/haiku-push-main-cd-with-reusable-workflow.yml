@@ -73,7 +73,7 @@ jobs:
         name: deployment-package
         path: haiku-src/deploy/
 
-   deploy-to-dev:
+  deploy-to-dev:
     name: "Deploy to Azure DEV environment"
     uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/blob/main/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
     needs:
