@@ -1,0 +1,114 @@
+name: Haiku Push Main CD
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'haiku-src/**'
+
+permissions:
+  id-token: write
+  
+
+jobs:
+  build-and-test-haiku-on-push:
+
+    name: Build and test haiku on push
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3.5.3
+
+    - name: Install dependencies
+      run: npm ci
+      working-directory: haiku-src
+
+    - name: Install supertest
+      run: npm install supertest --save-dev
+      working-directory: haiku-src
+
+    - name: Install mocha
+      run: npm install mocha --save-dev
+      working-directory: haiku-src
+
+    - name: Install mocha junit reporter
+      run: npm install mocha-junit-reporter --save-dev
+      working-directory: haiku-src
+
+    - name: Install chai
+      run: npm install chai --save-dev
+      working-directory: haiku-src
+
+    - name: Run tests
+      run: npm test 
+      working-directory: haiku-src
+
+    - name: Create Test Summary
+      uses: test-summary/action@v2.1
+      with:
+        paths: ${{github.workspace}}/haiku-src/test-results.xml
+        output: ${{github.workspace}}/haiku-src/summary.md
+        show: all
+      if: always()
+
+    - name: Write test output to job summary
+      run: |
+        echo "Test Results:" >>  $GITHUB_STEP_SUMMARY
+        cat ${{github.workspace}}/haiku-src/summary.md >> $GITHUB_STEP_SUMMARY
+      if: always()
+
+    - name: Copy files for deployment
+      run: |
+        mkdir deploy
+
+        cp -r package.json index.js haikus.json web.config server.js process.json package-lock.json node_modules/ views/ public/images public/css deploy/
+      working-directory: haiku-src
+
+    - name: Upload deployment package
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: deployment-package
+        path: haiku-src/deploy/
+
+   deploy-to-dev:
+    name: "Deploy to Azure DEV environment"
+    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/blob/main/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
+    needs:
+      - build-and-test-haiku-on-push
+    with:
+      runs-on: ubuntu-latest
+      artifact-to-deploy: deployment-package
+      env-name: DEV
+      env-url: https://gapdemodev.azurewebsites.net
+      app-name: gapdemodev
+    secrets: inherit
+
+  deploy-to-staging:
+    name: "Deploy to Azure STAGING environment"
+    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/blob/main/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
+    needs:
+      - build-and-test-haiku-on-push
+    with:
+      runs-on: ubuntu-latest
+      artifact-to-deploy: deployment-package
+      env-name: STAGING
+      env-url: https://gapdemostaging.azurewebsites.net
+      app-name: gapdemostaging
+    secrets: inherit
+
+  deploy-to-prod:
+    name: "Deploy to Azure PROD environment"
+    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/blob/main/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
+    needs:
+      - deploy-to-dev
+      - deploy-to-staging
+    with:
+      runs-on: ubuntu-latest
+      artifact-to-deploy: deployment-package
+      env-name: PROD
+      env-url: https://gapdemoprod.azurewebsites.net
+      app-name: gapdemoprod
+    secrets: inherit
