@@ -1,4 +1,4 @@
-name: Haiku Push Main CD
+name: Haiku Push - Reusable Workflow -  Deploy To Azure
 
 on:
   workflow_dispatch:
