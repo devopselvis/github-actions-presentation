@@ -75,7 +75,7 @@ jobs:
 
   deploy-to-dev:
     name: "Deploy to Azure DEV environment"
-    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/blob/main/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
+    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
     needs:
       - build-and-test-haiku-on-push
     with:
@@ -88,7 +88,7 @@ jobs:
 
   deploy-to-staging:
     name: "Deploy to Azure STAGING environment"
-    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/blob/main/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
+    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
     needs:
       - build-and-test-haiku-on-push
     with:
@@ -101,7 +101,7 @@ jobs:
 
   deploy-to-prod:
     name: "Deploy to Azure PROD environment"
-    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/blob/main/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
+    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
     needs:
       - deploy-to-dev
       - deploy-to-staging
