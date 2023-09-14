@@ -22,22 +22,6 @@ jobs:
       run: npm ci
       working-directory: haiku-src
 
-    - name: Install supertest
-      run: npm install supertest --save-dev
-      working-directory: haiku-src
-
-    - name: Install mocha
-      run: npm install mocha --save-dev
-      working-directory: haiku-src
-
-    - name: Install mocha junit reporter
-      run: npm install mocha-junit-reporter --save-dev
-      working-directory: haiku-src
-
-    - name: Install chai
-      run: npm install chai --save-dev
-      working-directory: haiku-src
-
     - name: Run tests
       run: npm test 
       working-directory: haiku-src
@@ -56,10 +40,14 @@ jobs:
         cat ${{github.workspace}}/haiku-src/summary.md >> $GITHUB_STEP_SUMMARY
       if: always()
 
+    - name: Compile using Vercel
+      run: npm run build
+      working-directory: haiku-src
+
     - name: Copy files for deployment
       run: |
         mkdir deploy
-        cp -r package.json index.js haikus.json web.config views/ public/ deploy/
+        cp -r dist/index.js server.js web.config public/* views/ deploy/
       working-directory: haiku-src
 
     - name: Upload deployment package

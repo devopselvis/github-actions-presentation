@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Build, test, and create deployment files for Haiku
-        uses: mickeygoussetorg/haiku-composite-action-build-test-upload-results@main
+        uses: devopselvis/haiku-composite-action-build-test-upload-results@main
         with:
           haiku-src-path: 'haiku-src'
       
