@@ -19,63 +19,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3.5.3
-
-    - name: Install dependencies
-      run: npm ci
-      working-directory: haiku-src
-
-    - name: Install supertest
-      run: npm install supertest --save-dev
-      working-directory: haiku-src
-
-    - name: Install mocha
-      run: npm install mocha --save-dev
-      working-directory: haiku-src
-
-    - name: Install mocha junit reporter
-      run: npm install mocha-junit-reporter --save-dev
-      working-directory: haiku-src
-
-    - name: Install chai
-      run: npm install chai --save-dev
-      working-directory: haiku-src
-
-    - name: Run tests
-      run: npm test 
-      working-directory: haiku-src
-
-    - name: Create Test Summary
-      uses: test-summary/action@v2.1
+    - name: Build, test, and create deployment files for Haiku
+      uses: devopselvis/haiku-composite-action-build-test-upload-results@main
       with:
-        paths: ${{github.workspace}}/haiku-src/test-results.xml
-        output: ${{github.workspace}}/haiku-src/summary.md
-        show: all
-      if: always()
-
-    - name: Write test output to job summary
-      run: |
-        echo "Test Results:" >>  $GITHUB_STEP_SUMMARY
-        cat ${{github.workspace}}/haiku-src/summary.md >> $GITHUB_STEP_SUMMARY
-      if: always()
-
-    - name: Copy files for deployment
-      run: |
-        mkdir deploy
-
-        cp -r package.json index.js haikus.json web.config server.js process.json package-lock.json node_modules/ views/ public/images public/css deploy/
-      working-directory: haiku-src
-
-    - name: Upload deployment package
-      uses: actions/upload-artifact@v3.1.2
-      with:
-        name: deployment-package
-        path: haiku-src/deploy/
+        haiku-src-path: 'haiku-src'
 
   deploy-to-dev:
     name: "Deploy to Azure DEV environment"
-    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
+    uses: devopselvis/haiku-reusable-workflow-deploy-app-service/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
     needs:
       - build-and-test-haiku-on-push
     with:
@@ -88,7 +39,7 @@ jobs:
 
   deploy-to-staging:
     name: "Deploy to Azure STAGING environment"
-    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
+    uses: devopselvis/haiku-reusable-workflow-deploy-app-service/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
     needs:
       - build-and-test-haiku-on-push
     with:
@@ -101,7 +52,7 @@ jobs:
 
   deploy-to-prod:
     name: "Deploy to Azure PROD environment"
-    uses: mickeygoussetorg/haiku-reusable-workflow-deploy-app-service/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
+    uses: devopselvis/haiku-reusable-workflow-deploy-app-service/.github/workflows/haiku-reusable-workflow-deploy-app-service.yml@main
     needs:
       - deploy-to-dev
       - deploy-to-staging
