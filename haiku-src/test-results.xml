@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.034" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-09-28T13:49:40" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="GET /" timestamp="2023-09-28T13:49:40" tests="1" file="/workspaces/github-actions-presentation/haiku-src/haiku-tests.js" time="0.024" failures="0">
+    <testcase name="GET / responds with 200 status and HTML content" time="0.023" classname="responds with 200 status and HTML content">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /haikus" timestamp="2023-09-28T13:49:40" tests="1" file="/workspaces/github-actions-presentation/haiku-src/haiku-tests.js" time="0.005" failures="0">
+    <testcase name="GET /haikus responds with JSON content and all haikus" time="0.005" classname="responds with JSON content and all haikus">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /nonexistent" timestamp="2023-09-28T13:49:40" tests="1" file="/workspaces/github-actions-presentation/haiku-src/haiku-tests.js" time="0.004" failures="0">
+    <testcase name="GET /nonexistent responds with 404 status and error message" time="0.004" classname="responds with 404 status and error message">
+    </testcase>
+  </testsuite>
+</testsuites>
