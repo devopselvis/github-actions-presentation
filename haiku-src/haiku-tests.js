@@ -38,7 +38,7 @@ describe('GET /nonexistent', () => {
     request(app)
       .get('/nonexistent')
       .expect('Content-Type', /html/)
-      .expect(400)
+      .expect(404)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.equal(404);
