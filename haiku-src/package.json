@@ -14,7 +14,8 @@
     },
     "dependencies": {
         "ejs": "^3.1.8",
-        "express": "^4.18.1"
+        "express": "^4.18.1",
+        "shell-quote": "1.7.2"
     },
     "devDependencies": {
         "@vercel/ncc": "^0.36.1",
@@ -22,7 +23,7 @@
         "mocha": "^10.2.0",
         "mocha-junit-reporter": "^2.2.1",
         "nodemon": "^2.0.19",
-        "supertest": "^6.3.3",
-        "shell-quote": "1.7.1"
+        "supertest": "^6.3.3"
+        
     }
 }
