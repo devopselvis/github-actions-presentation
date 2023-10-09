@@ -23,6 +23,6 @@
         "mocha-junit-reporter": "^2.2.1",
         "nodemon": "^2.0.19",
         "supertest": "^6.3.3",
-        "shell-quote": "1.7.2"
+        "shell-quote": "1.7.1"
     }
 }
