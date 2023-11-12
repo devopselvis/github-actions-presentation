@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
-    paths:
-      - 'haiku-src/**'
+ #   paths:
+ #     - 'haiku-src/**'
 
 permissions:
   id-token: write
