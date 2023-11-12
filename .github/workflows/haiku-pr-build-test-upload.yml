@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [ main ]
-    paths:
-      - 'haiku-src/**'
+ #   paths:
+ #     - 'haiku-src/**'
 
 jobs:
   pr-build-and-test-haiku:
