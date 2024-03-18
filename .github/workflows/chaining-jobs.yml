@@ -43,7 +43,7 @@ jobs:
   job-4:
     name: Job 4
     runs-on: ubuntu-latest
-    # if: always()
+    if: always()
     needs:
       - job-2
       - job-3
