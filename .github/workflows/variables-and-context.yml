@@ -29,16 +29,17 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Dump GitHub context
-        env:
-          ENV_CONTEXT: ${{ toJSON(env) }}
-        run: |
-          echo $SELENIUM_JAR_PATH
+      - name: Set environment variable
+        run: echo "MY_VAR=my_value" >> $GITHUB_ENV
 
-      - name: Dump env context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      - name: Use environment variable
+        run: echo "The value of MY_VAR is $MY_VAR"
+
+      - name: Set lower
+        run: echo "initial_version=1.0.0" >> $GITHUB_ENV
+
+      - name: Use lower
+        run: echo "The value of initial_version is $initial_version"
       
   #step/job output variables
   job2:
