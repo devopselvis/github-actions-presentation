@@ -33,9 +33,7 @@ jobs:
         env:
           ENV_CONTEXT: ${{ toJSON(env) }}
         run: |
-          echo "$ENV_CONTEXT"
-          echo "---"
-          env
+          echo $SELENIUM_JAR_PATH
 
       - name: Dump env context
         env:
