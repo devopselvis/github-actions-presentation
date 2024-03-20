@@ -32,7 +32,10 @@ jobs:
       - name: Dump GitHub context
         env:
           ENV_CONTEXT: ${{ toJSON(env) }}
-        run: echo "$ENV_CONTEXT"
+        run: |
+          echo "$ENV_CONTEXT"
+          echo "---"
+          env
 
       - name: Dump env context
         env:
