@@ -31,6 +31,11 @@ jobs:
     steps:
       - name: Dump GitHub context
         env:
+          ENV_CONTEXT: ${{ toJSON(env) }}
+        run: echo "$ENV_CONTEXT"
+
+      - name: Dump env context
+        env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
       
