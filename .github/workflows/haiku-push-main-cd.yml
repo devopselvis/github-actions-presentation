@@ -88,7 +88,7 @@ jobs:
     
     environment:
       name: 'DEV'
-      url: 'https://gapdemodev.azurewebsites.net'
+      url: 'https://github-actions-demo-dev-2024.azurewebsites.net'
 
     steps:
 
@@ -126,7 +126,7 @@ jobs:
     
     environment:
       name: 'STAGING'
-      url: 'https://gapdemostaging.azurewebsites.net'
+      url: 'https://github-actions-demo-staging-2024.azurewebsites.net'
 
     steps:
 
@@ -163,7 +163,7 @@ jobs:
     
     environment:
       name: 'PROD'
-      url: 'https://gapdemoprod.azurewebsites.net'
+      url: 'https://github-actions-demo-prod-2024.azurewebsites.net'
 
     steps:
 
