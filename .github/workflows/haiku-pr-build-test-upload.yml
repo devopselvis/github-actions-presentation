@@ -7,10 +7,12 @@ on:
     paths:
       - 'haiku-src/**'
 
+
+
 jobs:
   pr-build-and-test-haiku:
 
-    name: Build and test haiku on PR
+    name: please work
 
     runs-on: ubuntu-latest
 
