@@ -3,7 +3,7 @@ const app = require('./index');
 const { expect } = require('chai');
 
 describe('GET /', () => {
-  it('responds with 200 status and HTML content', (done) => {
+  it('responds with 200 status and HTML stuff', (done) => {
     request(app)
       .get('/')
       .expect('Content-Type', /html/)
@@ -18,7 +18,7 @@ describe('GET /', () => {
 });
 
 describe('GET /haikus', () => {
-  it('responds with JSON content and all haikus', (done) => {
+  it('responds with JSON content and all haiku information', (done) => {
     request(app)
       .get('/haikus')
       .expect('Content-Type', /json/)
@@ -34,11 +34,11 @@ describe('GET /haikus', () => {
 });
 
 describe('GET /nonexistent', () => {
-  it('responds with 404 status and error message', (done) => {
+  it('responds with 404 status and detailed error message', (done) => {
     request(app)
       .get('/nonexistent')
       .expect('Content-Type', /html/)
-      .expect(400)
+      .expect(404)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.equal(404);
