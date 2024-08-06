@@ -17,6 +17,7 @@ app.listen(port);
 const haikus = require('./haikus.json');
 //const express = require('express');
 //const app = express();
+//added a comment
 
 app.use(express.static('public'))
 app.set('view engine', 'ejs');
