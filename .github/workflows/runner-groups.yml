@@ -1,0 +1,11 @@
+name: Hello World Workflow
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  hello-world-job:
+    runs-on: mickey-large-hosted-runners
+    steps:
+      - name: Print Hello World
+        run: echo "Hello World"
