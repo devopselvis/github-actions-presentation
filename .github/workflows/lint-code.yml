@@ -16,3 +16,4 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
+          VALIDATE_JAVASCRIPT_STANDARD: true
