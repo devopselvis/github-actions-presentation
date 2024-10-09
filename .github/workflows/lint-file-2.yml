@@ -1,4 +1,4 @@
-name: Lint Code Base
+name: Lint Code Base 2
 
 on:
   workflow_dispatch:
