@@ -5,8 +5,7 @@ on:
 
 jobs:
   hello-world-job:
-    runs-on: 
-      group: mickey-large-hosted-runners
+    runs-on: group: mickey-large-hosted-runners
     steps:
       - name: Print Hello World
         run: echo "Hello World"
