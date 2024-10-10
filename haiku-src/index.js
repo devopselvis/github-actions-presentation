@@ -1,7 +1,7 @@
 let express = require('express');
 let app = express();
 let ejs = require('ejs');
-/*
+/* *
 const haikus = require('./haikus.json');
 const port = process.env.PORT || 3000;
 
@@ -17,6 +17,7 @@ app.listen(port);
 const haikus = require('./haikus.json');
 //const express = require('express');
 //const app = express();
+//added a comment
 
 app.use(express.static('public'))
 app.set('view engine', 'ejs');
