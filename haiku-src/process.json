@@ -1,5 +1,5 @@
     {
-      "name"        : "worker",
+      "name"        : "worker2",
       "script"      : "./index.js",
       "instances"   : 1,
       "merge_logs"  : true,
@@ -8,6 +8,6 @@
       "watch_options": {
         "followSymlinks": true,
         "usePolling"   : true,
-        "interval"    : 5
+        "interval"    : 10
       }
     }
